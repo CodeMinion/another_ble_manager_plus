@@ -1,7 +1,7 @@
 name: another_ble_manager_plus
 description: Integration between flutter_blue_plus and another_ble_manager
 version: 0.0.1
-homepage:
+homepage: https://github.com/CodeMinion/another_ble_manager_plus
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
