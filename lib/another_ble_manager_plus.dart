@@ -5,6 +5,7 @@ import 'dart:collection';
 import 'dart:typed_data';
 
 import 'package:another_ble_manager/another_ble_manager.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
 class PlusBleCharacteristic implements IBluetoothGattCharacteristic {
@@ -33,10 +34,11 @@ class PlusBleCharacteristic implements IBluetoothGattCharacteristic {
     if (success) {
       if (notify) {
 
+        /*
         // If we had one before close and tran new one.
         if (_charNotificationChannel != null) {
           await _charNotificationChannel?.cancel();
-        }
+        }*/
         // Track the notification stream
         _charNotificationChannel = _characteristic.value.listen((value) {
           // Notify device.
@@ -47,10 +49,13 @@ class PlusBleCharacteristic implements IBluetoothGattCharacteristic {
         });
       } else {
         // Clean notification stream if any.
+        /*
         if (_charNotificationChannel != null) {
           await _charNotificationChannel?.cancel();
           _charNotificationChannel = null;
         }
+
+         */
 
       }
     }
@@ -84,7 +89,7 @@ class PlusBleService implements IBluetoothGattService {
     for (var characteristic in _service.characteristics) {
       IBluetoothGattCharacteristic bleChar = PlusBleCharacteristic._(
           device: _device, service: this, characteristic: characteristic);
-      print(
+      debugPrint(
           "FOUND CHAR: ${characteristic.uuid.toString().toUpperCase()} - SVC ${_service.uuid.toString().toUpperCase()}");
       _characteristics.putIfAbsent(
           characteristic.uuid.toString().toUpperCase(), () => bleChar);
@@ -140,12 +145,12 @@ class PlusBleDevice implements IBleDevice {
 
     // Listen for connection state changes.
     _connectionStateStream = device.state.listen((event) {
-      print("Device State Received: $event");
+      debugPrint("Device State Received: $event");
       _bleDeviceConnectionStateChangeListener?.onDeviceConnectionStateChanged(
           device: this, newGattState: event.toBleConnectionState());
     })
       ..onDone(() {
-        print("Device Stream Closed");
+        debugPrint("Device Stream Closed");
       });
 
     return this;
@@ -171,7 +176,7 @@ class PlusBleDevice implements IBleDevice {
       }
     }
 
-    print("Services ${_servicesFound}");
+    debugPrint("Services $_servicesFound");
   }
 
   @override

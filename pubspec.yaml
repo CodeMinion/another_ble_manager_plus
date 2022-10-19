@@ -13,8 +13,9 @@ dependencies:
 
   flutter_blue_plus: ^1.2.0
 
-  another_ble_manager:
-    path: ../another_ble_manager
+  another_ble_manager: ^0.0.1
+  #another_ble_manager:
+  #  path: ../another_ble_manager
 
 dev_dependencies:
   flutter_test:
